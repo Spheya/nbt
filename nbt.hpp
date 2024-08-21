@@ -142,7 +142,7 @@ namespace nbt {
 		return Type(m_value.index());
 	}
 
-	bool Tag::isValid() const noexcept {
+	inline bool Tag::isValid() const noexcept {
 		return !m_error;
 	}
 
@@ -239,7 +239,7 @@ namespace nbt {
 		return data;
 	}
 
-	Tag Tag::deserialize(const void* data, const void* end, SerializationFlag flags) {
+	inline Tag Tag::deserialize(const void* data, const void* end, SerializationFlag flags) {
 		const uint8_t* byteData = static_cast<const uint8_t*>(data);
 		return deserialize(byteData, end, flags, false, true);
 	}
@@ -410,7 +410,7 @@ namespace nbt {
 		}
 	}
 
-	Tag Tag::deserialize(const uint8_t*& it, const void* end, SerializationFlag flags, bool isNameHidden, bool isRoot) {
+	inline Tag Tag::deserialize(const uint8_t*& it, const void* end, SerializationFlag flags, bool isNameHidden, bool isRoot) {
 		if (it + 1 > end) {
 			Tag errorTag;
 			errorTag.m_error = true;
