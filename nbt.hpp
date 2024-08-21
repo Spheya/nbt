@@ -71,6 +71,8 @@ namespace nbt {
 		const std::vector<int32_t>& intArrayValue() const;
 		const std::vector<int64_t>& longArrayValue() const;
 
+		void addChild(Tag tag);
+
 		const std::string& name() const noexcept;
 		bool hasName() const noexcept;
 		void setName(const std::string* name);
@@ -190,6 +192,17 @@ namespace nbt {
 
 	inline const std::vector<int64_t>& Tag::longArrayValue() const {
 		return std::get<size_t(Type::LongArray)>(m_value);
+	}
+
+	inline void Tag::addChild(Tag tag) {
+		std::vector<Tag>* vec;
+		if (type() == Type::Compound) {
+			vec = &std::get<size_t(Type::Compound)>(m_value);
+		} else {
+			vec = &std::get<size_t(Type::List)>(m_value);
+		}
+
+		vec->emplace_back(std::move(tag));
 	}
 
 	inline const std::string& Tag::name() const noexcept {
